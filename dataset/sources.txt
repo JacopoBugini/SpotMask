@@ -1,0 +1,11 @@
+You can download the full dataset at this link:
+GOOGLE DRIVE link
+
+
+If the original datasets are needed here below you can find the two sources.
+
+The MaskedFace-Net can be downloaded here:
+https://github.com/cabani/MaskedFace-Net 
+
+The Flickr-Faces-HQ Dataset (FFHQ) can be downloaded here:
+https://github.com/NVlabs/ffhq-dataset 
