@@ -3,6 +3,6 @@
 models/face-detection/yolo-v3/cfg/yolov3-face.cfg
 models/face-detection/yolo-v3/weights/yolov3-wider_16000.weights
 dataset/
-models/
+models/suggestions-detection/hyperparameter-tuning
 .git/
 .ipynb_checkpoints/
