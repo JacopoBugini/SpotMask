@@ -19,9 +19,7 @@ from utils.utils import *
 # -------------------------------------------------------------------
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--model-cfg', type=str, default='./models/face-detection/yolo-v3/cfg/yolov3-face.cfg')
-parser.add_argument('--model-weights', type=str, default='./models/face-detection/yolo-v3/weights/yolov3-wider_16000.weights')
-parser.add_argument('--src', type=int, default=0)
+parser.add_argument('--mode', type=str, default='suggestions')
 args = parser.parse_args()
 
 
@@ -29,7 +27,9 @@ args = parser.parse_args()
 # Load Model (YOLO)
 # -------------------------------------------------------------------
 
-net = cv2.dnn.readNetFromDarknet(args.model_cfg, args.model_weights)
+cfg_dir = './models/face-detection/yolo-v3/cfg/yolov3-face.cfg'
+weights_dir ='./models/face-detection/yolo-v3/weights/yolov3-wider_16000.weights'
+net = cv2.dnn.readNetFromDarknet(cfg_dir, weights_dir)
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 print("Model YOLO imported correctly")
@@ -58,7 +58,7 @@ def _main():
         outs = net.forward(get_outputs_names(net))
 
         # Run the different facemask detection models on YOLO outputs
-        process_frame(frame, outs, CONF_THRESHOLD, NMS_THRESHOLD)                
+        process_frame(frame, outs, CONF_THRESHOLD, NMS_THRESHOLD, args.mode)                
 
         cv2.imshow(wind_name, frame)
 
