@@ -1,20 +1,9 @@
 import os
 import shutil
 
-#FaceDetectionImproperMask
-images_original_directory = 'C:\\Users\\j.bugini\\Downloads\\FaceMask-Detection\\improper'
-images_destination_folder = 'C:\\Users\\j.bugini\\Downloads\\FaceMask-Detection\\improper\\dataset'
 
-train_folder = os.path.join(images_destination_folder, 'train')
-validation_folder = os.path.join(images_destination_folder, 'validation')
-test_folder = os.path.join(images_destination_folder, 'test')
-
-print('Train folder is located at:', train_folder)
-print('Validation folder is located at:', validation_folder)
-print('Test folder is located at:', test_folder)
-
+# Get files in a defined dir
 def list_files(dir):
-
     r = []
     for root, dirs, files in os.walk(dir):
         for name in files:
@@ -27,8 +16,8 @@ def list_files(dir):
 
     return r
 
-
-def get_destination_folder(file):
+# Obtain destination folder based on file names
+def get_destination_folder(file, images_destination_folder):
 
     if "Mask_Nose_Mouth" in file:
         dst = os.path.join(images_destination_folder, 'Chin')
@@ -43,7 +32,7 @@ def get_destination_folder(file):
     
     return dst
 
-
+# Classify in destination folder
 def classify_images(r):
 
     print(len(r), 'files in the directory')
@@ -64,7 +53,7 @@ def classify_images(r):
 
     return
 
-
+# Split dataset in different sets
 def dataset_splitter(dir, split=[0.7, 0.1, 0.2]):
 
     print("*****************************************")
@@ -105,10 +94,3 @@ def dataset_splitter(dir, split=[0.7, 0.1, 0.2]):
     print(os.path.join(dir, 'validation'), ':', validation_c)
     print(os.path.join(dir, 'test'), ':', test_c)
     print("*****************************************")
-
-
-
-r=list_files('C:\\Users\\j.bugini\\Downloads\\FaceMask-Detection\\improper')
-classify_images(r)
-#dataset_splitter('C:\\Users\\j.bugini\\documents\\repos\\facemask-correctness-detection\\images\\Off')
-#classify_images('C:\\Users\\j.bugini\\Downloads\\FaceMask-Detection\\FaceDetectionImproperMask')

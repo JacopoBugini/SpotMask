@@ -5,23 +5,6 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 
 # -------------------------------------------------------------------
-# Parameters
-# -------------------------------------------------------------------
-
-CONF_THRESHOLD = 0.5
-NMS_THRESHOLD = 0.4
-IMG_WIDTH = 416
-IMG_HEIGHT = 416
-
-# Default colors
-COLOR_BLUE = (255, 0, 0)
-COLOR_GREEN = (0, 255, 0)
-COLOR_RED = (0, 0, 255)
-COLOR_WHITE = (255, 255, 255)
-COLOR_YELLOW = (0, 255, 255)
-
-
-# -------------------------------------------------------------------
 # Load models
 # -------------------------------------------------------------------
 
@@ -37,6 +20,15 @@ suggest_net = keras.models.load_model('models/suggestions-detection/suggestions_
 print("Model Detect Mask imported correctly")
 print("*********************************************")
 
+# -------------------------------------------------------------------
+# Parameters
+# -------------------------------------------------------------------
+
+CONF_THRESHOLD = 0.5
+NMS_THRESHOLD = 0.4
+IMG_WIDTH = 416
+IMG_HEIGHT = 416
+
 
 # -------------------------------------------------------------------
 # Help functions
@@ -49,22 +41,6 @@ def get_outputs_names(net):
 
     # Get the names of the output layers, i.e. the layers with unconnected
     return [layers_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
-
-
-# Draw the predicted bounding box
-def draw_predict(frame, conf, left, top, right, bottom):
-    # Draw a bounding box.
-    cv2.rectangle(frame, (left, top), (right, bottom), COLOR_YELLOW, 2)
-
-    text = '{:.2f}'.format(conf)
-
-    # Display the label at the top of the bounding box
-    label_size, base_line = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
-
-    top = max(top, label_size[1])
-    cv2.putText(frame, text, (left, top - 4), cv2.FONT_HERSHEY_SIMPLEX, 0.4,
-                COLOR_WHITE, 1)
-
 
 def process_frame(frame, outs, conf_threshold, nms_threshold, mode):
     frame_height = frame.shape[0]
@@ -101,7 +77,6 @@ def process_frame(frame, outs, conf_threshold, nms_threshold, mode):
         width = box[2]
         height = box[3]
         final_boxes.append(box)
-        draw_predict(frame, confidences[i], left, top, left + width, top + height)
     
         colour_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         face_img_crop = colour_frame[top-30:top+height+30, left-30:left+width+30]
